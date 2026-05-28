@@ -5,7 +5,6 @@ export interface GatewayEnv {
   authService: { host: string; port: number };
   rabbitmq: { url: string };
   jwt: { secret: string };
-  cors: { origin: string };
 }
 
 export const configuration = (): GatewayEnv => ({
@@ -16,7 +15,6 @@ export const configuration = (): GatewayEnv => ({
   },
   rabbitmq: { url: process.env.RABBITMQ_URL! },
   jwt: { secret: process.env.JWT_SECRET! },
-  cors: { origin: process.env.CORS_ORIGIN ?? '*' },
 });
 
 export const validationSchema = Joi.object({
@@ -27,5 +25,4 @@ export const validationSchema = Joi.object({
     .uri({ scheme: ['amqp', 'amqps'] })
     .required(),
   JWT_SECRET: Joi.string().min(32).required(),
-  CORS_ORIGIN: Joi.string().default('*'),
 });

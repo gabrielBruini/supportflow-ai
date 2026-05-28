@@ -1,0 +1,4 @@
+export const SERVICES = {
+  AUTH: 'AUTH_SERVICE',
+  AUTH_EVENTS_CLIENT: 'AUTH_EVENTS_CLIENT',
+} as const;

@@ -23,6 +23,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@api-gateway/*": ["apps/api-gateway/*"],
+      "@auth-service/*": ["apps/auth-service/*"],
       "@shared/*": ["packages/shared/*"]
     }
   }

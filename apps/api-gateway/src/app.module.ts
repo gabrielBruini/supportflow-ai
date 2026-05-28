@@ -30,7 +30,9 @@ import { CorrelationIdMiddleware } from './common/middleware/correlation-id.midd
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(CorrelationIdMiddleware).forRoutes('*path');
+    consumer
+      .apply(CorrelationIdMiddleware)
+      .forRoutes({ path: '{*path}', method: RequestMethod.ALL });
 
     consumer
       .apply(AuthMiddleware)
@@ -38,8 +40,8 @@ export class AppModule implements NestModule {
         { path: 'auth/login', method: RequestMethod.POST },
         { path: 'auth/register', method: RequestMethod.POST },
         { path: 'auth/refresh', method: RequestMethod.POST },
-        { path: 'api/v1/health', method: RequestMethod.GET },
+        { path: 'health', method: RequestMethod.GET },
       )
-      .forRoutes('*path');
+      .forRoutes({ path: '{*path}', method: RequestMethod.ALL });
   }
 }
