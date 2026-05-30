@@ -24,6 +24,7 @@
     "paths": {
       "@api-gateway/*": ["apps/api-gateway/*"],
       "@auth-service/*": ["apps/auth-service/*"],
+      "@ticket-service/*": ["apps/ticket-service/*"],
       "@shared/*": ["packages/shared/*"]
     }
   }

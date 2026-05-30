@@ -4,8 +4,8 @@ import { RpcException } from '@nestjs/microservices';
 import { LoginDto } from '@shared/contracts/auth/login.dto';
 import { LoginResponse } from '@shared/contracts/auth/login-response.dto';
 import bcrypt from 'bcryptjs';
-import { RedisService } from '../database/redis/redis.service';
-import { UserRepository } from '../repository/auth.repository';
+import { RedisService } from '../../database/redis/redis.service';
+import { UserRepository } from '../repository/user.repository';
 
 const REFRESH_TOKEN_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
@@ -20,7 +20,7 @@ export class LoginService {
   async execute(dto: LoginDto): Promise<LoginResponse> {
     const user = await this.userRepository.findByEmail(dto.email);
 
-    if (await bcrypt.compare(dto.password, user.password)) {
+    if (!user || !(await bcrypt.compare(dto.password, user.password))) {
       throw new RpcException({
         statusCode: 401,
         message: 'Invalid credentials',

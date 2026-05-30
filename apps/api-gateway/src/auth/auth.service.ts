@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { SERVICES } from '@shared/constants/services';
+import { AUTH_PATTERNS } from '@shared/constants';
 import { LoginDto } from '@shared/contracts/auth/login.dto';
 import { LoginResponse } from '@shared/contracts/auth/login-response.dto';
 import { LogoutDto } from '@shared/contracts/auth/logout.dto';
@@ -8,11 +10,12 @@ import { RefreshTokenResponse } from '@shared/contracts/auth/refresh-token-respo
 import { RegisterUserDto } from '@shared/contracts/auth/register-user.dto';
 import { UserResponse } from '@shared/contracts/auth/user-response.dto';
 import { firstValueFrom } from 'rxjs';
-import { AUTH_PATTERNS } from '@shared/constants';
 
 @Injectable()
 export class AuthService {
-  constructor(@Inject(AuthService.name) private readonly client: ClientProxy) {}
+  constructor(
+    @Inject(SERVICES.AUTH) private readonly client: ClientProxy,
+  ) {}
 
   async registerUser(dto: RegisterUserDto): Promise<UserResponse> {
     return firstValueFrom(

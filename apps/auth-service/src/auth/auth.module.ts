@@ -3,18 +3,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { EXCHANGES } from '@shared/constants';
-import { PrismaModule } from './database/prisma/prisma.module';
+import { SERVICES } from '@shared/constants/services';
 import { AuthController } from './auth.controller';
 import { LoginService } from './services/login.service';
 import { LogoutService } from './services/logout.service';
 import { RefreshTokenService } from './services/refresh-token.service';
 import { RegisterUserService } from './services/register-user.service';
-import { UserRepository } from './repository/auth.repository';
-import { SERVICES } from '@shared/constants/services';
+import { UserRepository } from './repository/user.repository';
 
 @Module({
   imports: [
-    PrismaModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({

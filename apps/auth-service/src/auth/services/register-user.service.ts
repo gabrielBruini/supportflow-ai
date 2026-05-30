@@ -3,7 +3,7 @@ import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { RegisterUserDto } from '@shared/contracts/auth/register-user.dto';
 import bcrypt from 'bcryptjs';
 import { UserResponse } from '@shared/contracts/auth/user-response.dto';
-import { UserRepository } from '../repository/auth.repository';
+import { UserRepository } from '../repository/user.repository';
 import { USER_EVENTS } from '@shared/constants';
 import { UserCreatedEvent } from '@shared/events/user-created.event';
 import { SERVICES } from '@shared/constants/services';
@@ -17,7 +17,7 @@ export class RegisterUserService {
   ) {}
 
   async execute(dto: RegisterUserDto): Promise<UserResponse> {
-    const existing = await this.userRepository.existByEmail(dto.email);
+    const existing = await this.userRepository.existsByEmail(dto.email);
 
     if (existing) {
       throw new RpcException({

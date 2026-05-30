@@ -1,7 +1,6 @@
 import * as Joi from 'joi';
 
 export interface AuthServiceEnv {
-  port: number;
   database: { url: string };
   jwt: { secret: string; expiresIn: string };
   redis: { host: string; port: number };
@@ -9,7 +8,6 @@ export interface AuthServiceEnv {
 }
 
 export const configuration = (): AuthServiceEnv => ({
-  port: parseInt(process.env.AUTH_SERVICE_PORT!),
   database: { url: process.env.DATABASE_URL! },
   jwt: {
     secret: process.env.JWT_SECRET!,
@@ -23,7 +21,6 @@ export const configuration = (): AuthServiceEnv => ({
 });
 
 export const validationSchema = Joi.object({
-  AUTH_SERVICE_PORT: Joi.number().required(),
   DATABASE_URL: Joi.string()
     .uri({ scheme: ['postgresql', 'postgres'] })
     .required(),

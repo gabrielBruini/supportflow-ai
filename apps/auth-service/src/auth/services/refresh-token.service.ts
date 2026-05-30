@@ -3,8 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { RpcException } from '@nestjs/microservices';
 import { RefreshTokenDto } from '@shared/contracts/auth/refresh-token.dto';
 import { RefreshTokenResponse } from '@shared/contracts/auth/refresh-token-response.dto';
-import { RedisService } from '../database/redis/redis.service';
-import { UserRepository } from '../repository/auth.repository';
+import { RedisService } from '../../database/redis/redis.service';
+import { UserRepository } from '../repository/user.repository';
 
 const REFRESH_TOKEN_TTL_SECONDS = 60 * 60 * 24 * 7;
 
@@ -28,6 +28,13 @@ export class RefreshTokenService {
     }
 
     const user = await this.userRepository.findById(userId);
+
+    if (!user) {
+      throw new RpcException({
+        statusCode: 401,
+        message: 'Invalid refresh token',
+      });
+    }
 
     await this.redis.del(key);
     const newRefreshToken = crypto.randomUUID();

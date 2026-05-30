@@ -10,6 +10,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { configuration, validationSchema } from './config/env.config';
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
+import { TicketsModule } from './tickets/tickets.module';
 import { AuthMiddleware } from './auth/middleware/auth.middleware';
 import { CorrelationIdMiddleware } from './common/middleware/correlation-id.middleware';
 
@@ -25,6 +26,7 @@ import { CorrelationIdMiddleware } from './common/middleware/correlation-id.midd
     ThrottlerModule.forRoot([{ name: 'default', ttl: 60_000, limit: 120 }]),
     AuthModule,
     HealthModule,
+    TicketsModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

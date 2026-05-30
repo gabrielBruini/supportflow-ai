@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { LogoutDto } from '@shared/contracts/auth/logout.dto';
-import { RedisService } from '../database/redis/redis.service';
+import { RedisService } from '../../database/redis/redis.service';
 
 @Injectable()
 export class LogoutService {
